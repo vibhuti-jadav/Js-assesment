@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container my-5 border border-secondary p-3 bg-body-secondary shadow-sm rounded-1   w-50 ">
+        <h3 class="text-center">Change password</h3>
+        <br>
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Current password</label>
+            <div class="col-sm-5 text-black">
+                <input type="password" class="form-control" id="cp">
+            </div>
+          </div>
+          <br>
+          <div class="mb-3 row">
+            <label for="inputPassword" class="col-sm-2 col-form-label">new password</label>
+            <div class="col-sm-5">
+              <input type="password" class="form-control" id="np">
+            </div>
+          </div>
+          <br>
+          <div class="mb-3 row">
+            <label for="inputPassword" class="col-sm-2 col-form-label">confirm password</label>
+            <div class="col-sm-5">
+              <input type="password" class="form-control" id="cop">
+            </div>
+          </div>
+          <br>
+          <div class="col-sm-8 text-center">
+            <button class="border border-secondary rounded-1 px-3" onclick="change()">Submit</button>
+          </div>
+          
+    </div>
+    <br>
+    <br>
+  
+            
+        </div>
+    </div>
+    
+    
+</body>
+
+<script>
+    let store="hitisha12";
+
+    function change(){
+
+        let CurrentPassword =document.getElementById("cp").value
+        let NewPassword = document.getElementById("np").value
+        let ConfirmPassword = document.getElementById("cop").value
+
+        if(CurrentPassword==store){
+            if(NewPassword==CurrentPassword){
+                if(NewPassword == ConfirmPassword){
+                    store=NewPassword;
+                    alert("password change success!")
+                }
+                else{
+                    alert("new password and confirm password do not match!")
+
+                }
+            }
+            else{
+                alert("New password password and current password are same.")
+            }
+        }
+        else{
+            alert(" old password did not match")
+        }
+
+    }
+
+</script>
+</html>
