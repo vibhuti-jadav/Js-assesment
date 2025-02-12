@@ -11,17 +11,17 @@
     <div class="container  ">
         <div class="row d-flex justify-content-center align-middle mt-5 ">
             <div class="col-4 ">
-                  <form action="" class="form-control border border-black shadow">
+                  <form action="" class="form-control border  shadow-lg bg-dark bg-gradient p-4">
                     <p class="text-center h4 bg-body-tertiary p-3 mb-4">change password</p>
-                 <label for="" class="fw-bold">current password</label>
+                 <label for="" class="fw-bold text-primary">current password</label>
                  <br/>
               <input type="password" class="form-control mb-5" id="current">
 
-              <label for="" class="fw-bold">New password</label>
+              <label for="" class="fw-bold text-primary">New password</label>
                  <br/>
               <input type="password" class="form-control mb-5" id="newpass">
 
-              <label for="" class="fw-bold">confirm password</label>
+              <label for="" class="fw-bold text-primary">confirm password</label>
                  <br/>
               <input type="password" class="form-control mb-5" id="confirm">
 
@@ -51,7 +51,7 @@ function cp(){
         let ConfirmPassword =document.getElementById("confirm").value
 
         if(CurrentPassword==store){
-            if(NewPassword==CurrentPassword){
+            if(NewPassword!==CurrentPassword){
                 if(NewPassword == ConfirmPassword){
                     store=NewPassword;
                     alert("password change success!")
