@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slider</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
+</head>
+<body>
+    
+    <div class="container mt">
+        <button onclick="prev()" class="p-2 btn"><i class="ri-arrow-left-s-line fs c"></i></button>
+        <div class="main-slider ">
+            <div class="slider ">
+                <div class="slices">
+                    <img src="4.webp" alt="">
+                </div>
+                <div class="slices">
+                    <img src="2.webp" alt="">
+                </div>
+                <div class="slices">
+                     <img src="3.webp" alt="">
+                </div>
+                <div class="slices">
+                    <img src="1.webp" alt="">
+                </div>
+            </div>
+        </div>
+        <button onclick="next()" class="p-2 btn"><i class="ri-arrow-right-s-line c fs"></i></button>
+    </div>
+
+        <div class="number-slider">
+            <button onclick="first(0)"><i class="ri-circle-fill"></i></button>
+            <button onclick="first(1)"><i class="ri-circle-fill"></i></button>
+            <button onclick="first(2)"><i class="ri-circle-fill"></i></button>
+            <button onclick="first(3)"><i class="ri-circle-fill"></i></button>
+        </div>
+    
+
+</body>
+
+<script>
+    let slider =document.querySelector(".slider")
+
+    let n=0;
+
+    function next(){
+        if(n<3){
+            n++;
+            slider.style.transition=`all 0.5s`;
+        }
+        else{
+            n=0;
+            slider.style.transition=`all 0s`;
+        }
+        slider.style.transform=`translateX(-${1000*n}px)`;
+    }
+
+    function prev(){
+        if(n>0){
+            n--;
+            slider.style.transition=`all 0.5s`
+        }
+        else{
+            n =3;
+            slider.style.transition=`all 0s`;
+        }
+        slider.style.transform=`translateX(-${1000*n}px)`;
+    }
+
+    function first(n){
+        slider.style.transform=`translateX(-${1000*n}px)`;
+    }
+</script>
+</html>
