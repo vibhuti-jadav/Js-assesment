@@ -247,11 +247,48 @@ let row = document.getElementById("row")
 let cartBody = document.getElementById("cart-body")
 let search = document.getElementById("search")
 
+let itembody = document.getElementById("itembody")
+let total = document.getElementById("total")
+
 
 function setLocal(c){
  localStorage.setItem("cart", JSON.stringify(c))
  showCart()
 }
+
+
+
+
+
+function handleItem(id){
+let newItem = data.find((ele) => ele.id==id)
+
+const {image, title, category, price, rating, description} = newItem
+
+itembody.innerHTML = `
+    <div class="card h-100">
+                <div class="row">
+                  <div class="col-4">
+                     <img src=${image} class="card-img-top border" alt="...">
+                  </div>
+                  <div class="col-8">
+                    <div class="card-body  p-1"> 
+                       <h6 class="card-title">${title}</h6> 
+                         <div class="d-flex  justify-content-between my-2">
+                        <span class="badge text-bg-light">$ ${price}</span>
+                        <span class="badge text-bg-light">⭐ ${rating.rate}</span>
+                      </div>
+                         <p class="card-text mb-2">${category}</p>
+                         <p class="card-text mb-2">${description}</p>
+                      <a onclick="handleCart(${id})" class="btn btn-success">Add</a>
+                    </div>
+                  </div>
+                </div>
+                </div>
+`
+
+}
+
 
 
 
@@ -360,9 +397,10 @@ function showrow(data){
                       
                     </div>
                     <hr>
-
-                    <div class="d-grid  col-9 mx-auto">
+                    <div class="">
                     <a class="btn btn-primary rounded-5" onclick="handleCart(${ele.id})">Add To Cart</a>
+
+                     <a onclick="handleItem(${ele.id})" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-warning rounded-5">More</a>
                     </div>
                   </div>
                 </div>
@@ -396,6 +434,7 @@ function showCart(){
                     
                      
                         <a onclick="deleteCart(${el.id})" class="btn btn-danger btn-sm">🗑️</a>
+                          <a onclick="handleItem(${el.id})" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-warning">More</a>
                       </div>
                     </div>
                   </div>
@@ -403,6 +442,25 @@ function showCart(){
             </div>
     `
   })
+
+  total.innerHTML = ` 
+ 
+  <div class="container bg-light text-dark rounded-2">
+            <div class="row g-2">
+              <div class="col-4 p-1">
+                 item No: ${cart.length}
+              </div>
+              <div class="col-8 p-1">
+                offer:
+              </div>
+              <div class="col-12 p-1">
+               Total:
+                 <span class="bg-dark  text-light">${cart.reduce(( sum, ele) => ele.price +sum, 0)}</span>
+              </div>
+            </div>
+        </div>
+  `
+
 }
 
 
