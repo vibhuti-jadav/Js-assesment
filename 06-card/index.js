@@ -251,8 +251,19 @@ let itembody = document.getElementById("itembody")
 let total = document.getElementById("total")
 
 
+
+function getLocal(){
+  cart = JSON.parse(localStorage.getItem("cart")) || []
+ }
+
+
+ let total_price = cart.reduce(( sum, ele) => ele.price*ele.count + sum, 0) 
+
+
 function setLocal(c){
  localStorage.setItem("cart", JSON.stringify(c))
+ total_price = cart.reduce(( sum, ele) => ele.price*ele.count + sum, 0)
+ getLocal()
  showCart()
 }
 
@@ -296,10 +307,16 @@ itembody.innerHTML = `
 
 function handleCart(id){
   let item = data.find((el) => el.id == id )
+  item.count = 1;
   cart.push(item)
 
   setLocal(cart)
 
+}
+
+function deleteCart(id){
+  let newCart = cart.filter((ele) => ele.id != id)
+  setLocal(newCart)
 }
 
 
@@ -412,12 +429,56 @@ function showrow(data){
 showrow(data)
 
 
+let val;
+function addOffer(){
+
+total_price =  cart.reduce(( sum, ele) => ele.price*ele.count +sum, 0)
+let code = document.getElementById("code");
+
+if(code.value == "red30"){
+
+   val = 30*total_price/100
+   console.log()
+   total_price = total_price-val
+
+   showCart()
+}
+
+}
+
+
+
+function handleIncCount(id){
+ let newCart = cart.find((ele) => ele.id == id)
+ newCart.count++;
+
+ cart.map((ele) => {
+   if(ele.id==id){
+     ele = newCart
+   }
+ })
+ setLocal(cart)
+}
+
+function handleDecCount(id){
+ let newCart = cart.find((ele) => ele.id == id)
+ newCart.count--;
+
+ cart.map((ele) => {
+   if(ele.id==id){
+     ele = newCart
+   }
+ })
+ setLocal(cart)
+}
+
+
 function showCart(){
   cartBody.innerHTML="";
   cart.map((el)=>{
     cartBody.innerHTML += `
        <div class="col-12">
-                <div class="card h-100">
+                <div class="card h-100 ">
                   <div class="row">
                     <div class="col-4">
                        <img src=${el.image} height="100px" class="card-img-top border" alt="...">
@@ -430,12 +491,16 @@ function showCart(){
                           <span class="badge text-bg-light">$ ${el.price}</span>
                           <span class="badge text-bg-light">⭐ ${el.rating.rate}</span>
                         </div>
-                      
-                    
-                     
-                        <a onclick="deleteCart(${el.id})" class="btn btn-danger btn-sm">🗑️</a>
+
+                          <a onclick="deleteCart(${el.id})" class="btn btn-danger btn-sm">🗑️</a>
                           <a onclick="handleItem(${el.id})" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-warning">More</a>
-                      </div>
+
+                                <div class="btn-group " style="margin-left: 30px;">
+                         <button onclick="handleDecCount(${el.id})" class="btn btn-secondary btn-sm">-</button>
+                         <button class="btn btn-light btn-sm" disabled>${el.count}</button>
+                         <button onclick="handleIncCount(${el.id})" class="btn btn-secondary btn-sm">+</button>
+                       </div>
+                        </div>
                     </div>
                   </div>
                   </div>
@@ -443,6 +508,7 @@ function showCart(){
     `
   })
 
+      total.innerHTML = ""
   total.innerHTML = ` 
  
   <div class="container bg-light text-dark rounded-2">
@@ -450,16 +516,36 @@ function showCart(){
               <div class="col-4 p-1">
                  item No: ${cart.length}
               </div>
-              <div class="col-8 p-1">
+        
+              <div class="col-8 p-1 d-flex">
                 offer:
+               
+                <div class="d-flex">
+                   <input class="form-control form-control-sm" id="code" />
+                   <button onclick="addOffer()" class="btn btn-warning btn-sm">Apply</button>
+                </div>
+              
               </div>
               <div class="col-12 p-1">
                Total:
-                 <span class="bg-dark  text-light">${cart.reduce(( sum, ele) => ele.price +sum, 0)}</span>
+                 <span class="bg-dark  text-light">${Math.round(total_price)}</span>
               </div>
+
+              <div class="col-12 p-1">
+                  ${
+                  val ? ` <span class="bg-warning rounded-2 p-2">
+                    you save ${val} on this order
+                  </span>` : ``
+                 }
+              </div>
+
             </div>
         </div>
+     
   `
+  ;
+
+
 
 }
 
@@ -471,6 +557,6 @@ showCart()
 function deleteCart(id){
   task_arr = cart.filter((ele) => ele.id != id)
   setLocal(task_arr)
-  location.reload()
+
 
 }
